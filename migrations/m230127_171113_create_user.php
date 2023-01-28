@@ -19,6 +19,7 @@ class m230127_171113_create_user extends Migration
             'password' => $this->string()->notNull(),
             'image' => $this->string(),
         ]);
+//        $this->insertFakeUsers();
     }
 
     /**
@@ -27,5 +28,21 @@ class m230127_171113_create_user extends Migration
     public function safeDown()
     {
         $this->dropTable('user');
+    }
+
+    private function insertFakeUsers()
+    {
+        $faker = \Faker\Factory::create();
+        for ($i = 0; $i < 30; ++$i) {
+            $this->insert(
+                'user',
+                [
+                    'name' => $faker->name,
+                    'surname' => $faker->lastName,
+                    'password' => password_hash('password', PASSWORD_DEFAULT),
+                    'image' => NULL,
+                ]
+            );
+        }
     }
 }
