@@ -30,6 +30,17 @@ class UserController extends Controller
         ];
     }
 
+    public function actionView($id)
+    {
+        $model = User::findOne($id);
+
+        if ($model === null) {
+            return ['error' => "Пользователь с id $id не найден"];
+        }
+
+        return $model;
+    }
+
     public function actionCreate()
     {
         $model = new User();

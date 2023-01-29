@@ -74,6 +74,20 @@ $(function () {
         }
     });
 
+    // edit user ajax request
+    $(document).delegate('.user_edit_btn', 'click', function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        $.ajax({
+            url: '/users/' + id,
+            method: 'get',
+            success: function (response) {
+                $("#name").val(response.name);
+                $("#surname").val(response.surname);
+            }
+        });
+    });
+
     // delete user ajax request
     $(document).delegate('.user_delete_btn', 'click', function (e) {
         e.preventDefault();
