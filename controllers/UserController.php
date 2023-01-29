@@ -50,4 +50,22 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @throws \Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDelete(int $id)
+    {
+        $model = User::findOne($id);
+
+        if ($model->hasImage()) {
+            $model->deleteImageFromStorage();
+        }
+
+        if (!$model->delete()) {
+            return ['error' => "Ошибка удаления записи с id $id"];
+        }
+
+        return ['message' => "success"];
+    }
 }

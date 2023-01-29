@@ -73,4 +73,30 @@ $(function () {
             });
         }
     });
+
+    // delete user ajax request
+    $(document).delegate('.user_delete_btn', 'click', function (e) {
+        e.preventDefault();
+        const id = $(this).attr('id');
+        Swal.fire({
+            title: 'Вы дейстительно хотите удалить пользователя с id: ' + id,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Да, удалить!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/users/' + id,
+                method: 'delete',
+                    success: function (response) {
+                    let el = document.getElementById('table_body');
+                    el.remove();
+                    fetchAllUsers();
+                }
+            });
+            }
+        })
+    });
 });
