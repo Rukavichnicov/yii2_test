@@ -8,13 +8,19 @@ $(function () {
             method: 'get',
             success: function (response) {
                 $('#table_users').append(`
-                  <tbody id="table_body">${response['users'].map(n => `
+                  <tbody id="table_body">${response['users'].map(function (n) {
+                        if (n.image != null) {
+                            n.image = `<img class="img-fluid" src="${'/uploads/images/users/' + n.image}" width="250" alt="${'Картинка пользователя с id' + n.id}">`;
+                        } else {
+                            n.image = ''
+                        }
+                        return `
                     <tr>
                       <td>${n.id}</td>
                       <td>${n.name}</td>
                       <td>${n.surname}</td>
                       <td>
-                        <img src="${+n.image}">
+                        ${n.image}
                       </td>
                       <td>
                       <a href="#" id="${n.id}"
@@ -27,7 +33,9 @@ $(function () {
                       <a href="#" id="${n.id}" class="btn btn-danger btn-sm user_delete_btn">Удалить</a>
                       </td>
 
-                    </tr>`).join('')}
+                    </tr>`
+                    }
+                ).join('')}
                   </tbody>
                 `);
             }
@@ -103,13 +111,13 @@ $(function () {
             if (result.isConfirmed) {
                 $.ajax({
                     url: '/users/' + id,
-                method: 'delete',
+                    method: 'delete',
                     success: function (response) {
-                    let el = document.getElementById('table_body');
-                    el.remove();
-                    fetchAllUsers();
-                }
-            });
+                        let el = document.getElementById('table_body');
+                        el.remove();
+                        fetchAllUsers();
+                    }
+                });
             }
         })
     });
