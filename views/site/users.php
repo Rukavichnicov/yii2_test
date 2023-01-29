@@ -33,5 +33,5 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<?php //$this->registerJsFile('@web/js/main.js',
-//    ['depends' => [\yii\web\JqueryAsset::class]]) ?>
+<?php $this->registerJsFile('@web/js/main.js',
+    ['depends' => [\yii\web\JqueryAsset::class]]) ?>
