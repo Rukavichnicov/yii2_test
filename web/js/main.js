@@ -33,4 +33,44 @@ $(function () {
             }
         });
     }
+
+    // add new user ajax request
+    $("#add_user_form").submit(function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        if (!this.checkValidity()) {
+            e.preventDefault();
+            $(this).addClass('was-validated');
+        } else {
+            $.ajax({
+                url: '/users',
+                method: 'post',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.error) {
+
+                    } else {
+                        $("#add_user_modal").modal('hide');
+                        $("#add_user_form")[0].reset();
+                        $("#image").removeClass('is-invalid');
+                        $("#image").next().text('');
+                        $("#add_user_form").removeClass('was-validated');
+                        Swal.fire(
+                            'Добавлено',
+                            response.message,
+                            'success'
+                        );
+                        $('.modal-backdrop').remove();
+                        let el = document.getElementById('table_body');
+                        el.remove();
+                        fetchAllUsers();
+                    }
+                }
+            });
+        }
+    });
 });
