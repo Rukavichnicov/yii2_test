@@ -4,9 +4,13 @@ $(function () {
 
     function fetchAllUsers() {
         let elementList = document.querySelector('.pageactive');
-        let elementLink = elementList.getElementsByClassName('page-link');
-        let href = elementLink[0].getAttribute('href');
-        let getParam = href.substring(10);
+        if (elementList != null) {
+            let elementLink = elementList.getElementsByClassName('page-link');
+            let href = elementLink[0].getAttribute('href');
+            var getParam = href.substring(10);
+        } else {
+            var getParam = '';
+        }
 
         $.ajax({
             url: '/users' + getParam,
