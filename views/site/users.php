@@ -1,3 +1,10 @@
+<?php
+
+/** @var yii\web\View $this */
+
+$this->title = 'Пользователи';
+?>
+
 <!-- add new user modal start -->
 <div class="modal fade" id="add_user_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
