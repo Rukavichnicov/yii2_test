@@ -7,6 +7,8 @@ use yii\web\UploadedFile;
 
 class User extends ActiveRecord
 {
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
     private const PATH_USERS_IMAGES = 'uploads/images/users/';
     public $password_repeat;
     private $uploadeFile;
@@ -25,6 +27,14 @@ class User extends ActiveRecord
     public function fields(): array
     {
         return ['id', 'name', 'surname', 'image'];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[static::SCENARIO_CREATE] = ['id', 'name', 'surname', 'image', 'password_repeat'];
+        $scenarios[static::SCENARIO_UPDATE] = ['name', 'surname', 'image'];
+        return $scenarios;
     }
 
     public function rules()

@@ -5,13 +5,9 @@ namespace app\controllers;
 
 use app\models\User;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\db\StaleObjectException;
-use yii\rest\ActiveController;
 use yii\rest\Controller;
-use yii\web\ServerErrorHttpException;
-use yii\web\UploadedFile;
 
 class UserController extends Controller
 {
@@ -33,10 +29,6 @@ class UserController extends Controller
             'users' => $users,
             'pagination' => $pagination,
         ];
-
-//        return new ActiveDataProvider([
-//            'users' => User::find(),
-//        ]);
     }
 
     public function actionView($id)
@@ -53,6 +45,7 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $model->scenario = User::SCENARIO_CREATE;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->validate()) {
             if ($model->hasUploadedFile()) {
@@ -73,10 +66,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_UPDATE;
         $model->load(Yii::$app->request->getBodyParams(), '');
         if ($model->validate()) {
             if ($model->hasUploadedFile()) {
                 if ($model->validateUploadedFile()) {
+                    if ($model->hasImage()) {
+                        $model->deleteImageFromStorage();
+                    }
                     $model->image = $model->upload();
                 } else {
                     return ['error' => ['image' => 'Загружаемый файл должен быть картинкой, размером не более 10 МB']];
