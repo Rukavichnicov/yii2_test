@@ -32,7 +32,7 @@ class User extends ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[static::SCENARIO_CREATE] = ['id', 'name', 'surname', 'image', 'password_repeat'];
+        $scenarios[static::SCENARIO_CREATE] = ['id', 'name', 'surname', 'image', 'password', 'password_repeat'];
         $scenarios[static::SCENARIO_UPDATE] = ['name', 'surname', 'image'];
         return $scenarios;
     }
