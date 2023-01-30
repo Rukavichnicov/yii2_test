@@ -9,31 +9,31 @@
             <form action="#" method="post" enctype="multipart/form-data" id="add_user_form" novalidate>
                 <div class="modal-body p-5">
                     <div class="mb-3">
-                        <label for="name">Имя пользователя</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Василий" required>
+                        <label for="name_add">Имя пользователя</label>
+                        <input type="text" id="name_add" name="name" class="form-control" placeholder="Василий" required>
                         <div class="invalid-feedback">Имя пользователя обязательное поле для заполнения</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="surname">Фамилия пользователя</label>
-                        <input type="text" name="surname" id="surname" class="form-control" placeholder="Иванов">
+                        <label for="surname_add">Фамилия пользователя</label>
+                        <input type="text" name="surname" id="surname_add" class="form-control" placeholder="Иванов">
                     </div>
 
                     <div class="mb-3">
-                        <label for="password">Пароль</label>
-                        <input type="password" name="password" id="password" class="form-control" required>
+                        <label for="password_add">Пароль</label>
+                        <input type="password" name="password" id="password_add" class="form-control" required>
                         <div class="invalid-feedback">Пароль обязательное поле для заполнения</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="password_repeat">Повторите пароль</label>
-                        <input type="password" name="password_repeat" id="password_repeat" class="form-control" required>
+                        <label for="password_repeat_add">Повторите пароль</label>
+                        <input type="password" name="password_repeat" id="password_repeat_add" class="form-control" required>
                         <div class="invalid-feedback">Пароль обязательное поле для заполнения</div>
                     </div>
 
                     <div class="mb-3">
-                        <label>Изображение пользователя</label>
-                        <input type="file" accept=".jpg, .jpeg, .png" name="image" id="image" class="form-control">
+                        <label for="image_add">Изображение пользователя</label>
+                        <input type="file" accept=".jpg, .jpeg, .png" name="image" id="image_add" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
