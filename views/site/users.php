@@ -109,6 +109,8 @@
                         </table>
                     </div>
                 </div>
+                <?= /** @var \yii\data\Pagination $pages */
+                \yii\bootstrap5\LinkPager::widget(['pagination' => $pages, 'activePageCssClass' => 'active pageactive']); ?>
             </div>
         </div>
     </div>

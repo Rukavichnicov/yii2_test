@@ -3,8 +3,13 @@ $(function () {
     fetchAllUsers();
 
     function fetchAllUsers() {
+        let elementList = document.querySelector('.pageactive');
+        let elementLink = elementList.getElementsByClassName('page-link');
+        let href = elementLink[0].getAttribute('href');
+        let getParam = href.substring(10);
+
         $.ajax({
-            url: '/users',
+            url: '/users' + getParam,
             method: 'get',
             success: function (response) {
                 $('#table_users').append(`

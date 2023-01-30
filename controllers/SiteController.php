@@ -2,14 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\EntryForm;
-use Yii;
+use app\models\User;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -72,6 +70,12 @@ class SiteController extends Controller
      */
     public function actionUser()
     {
-        return $this->render('users');
+        $models = User::find();
+        $pages = new Pagination([
+            'totalCount' => $models->count(),
+            'pageSize' => 10,
+        ]);
+
+        return $this->render('users', compact('pages'));
     }
 }
