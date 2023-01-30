@@ -17,6 +17,7 @@ $config = [
             'cookieValidationKey' => 'ZTpLwMdUSq5Jy6eHfdJkAspJpIHCcTyb',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
+                'multipart/form-data' => 'yii\web\MultipartFormDataParser',
             ],
         ],
         'cache' => [
@@ -49,7 +50,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['user']],
+                ['class' => 'app\components\MyUrlRule', 'controller' => ['user']],
             ],
         ],
     ],

@@ -58,32 +58,19 @@
             </div>
             <form action="#" method="post" enctype="multipart/form-data" id="edit_user_form" novalidate>
                 <input type="hidden" name="id" id="pid">
-                <input type="hidden" name="old_image" id="old_image">
                 <div class="modal-body p-5">
                     <div class="mb-3">
                         <label>Имя пользователя</label>
                         <input type="text" name="name" id="name" class="form-control" required>
                         <div class="invalid-feedback">Имя пользователя обязательное поле для заполнения</div>
                     </div>
-
                     <div class="mb-3">
                         <label>Фамилия пользователя</label>
                         <input type="text" name="surname" id="surname" class="form-control">
                     </div>
-
-                    <div class="mb-3">
-                        <label>Пароль</label>
-                        <input type="password" name="password" class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Повторите пароль</label>
-                        <input type="password" name="password_repeat" class="form-control">
-                    </div>
-
                     <div class="mb-3">
                         <label>Изображение пользователя</label>
-                        <input type="file" accept=".jpg, .jpeg, .png" name="image" id="image_edit" class="form-control">
+                        <input type="file" accept=".jpg, .jpeg, .png" name="image" id="image" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -102,21 +89,22 @@
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="text-secondary fw-bold fs-3">Все пользователи</div>
-                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#add_user_modal">Создать пользователя
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#add_user_modal">Создать
+                        пользователя
                     </button>
                 </div>
                 <div class="card-body">
                     <div class="row" id="show_users">
                         <table id="table_users" class="table">
                             <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Имя</th>
-                                    <th>Фамилия</th>
-                                    <th>Картинка</th>
-                                    <th>Редактировать</th>
-                                    <th>Удалить</th>
-                                </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>Фамилия</th>
+                                <th>Картинка</th>
+                                <th>Редактировать</th>
+                                <th>Удалить</th>
+                            </tr>
                             </thead>
                         </table>
                     </div>

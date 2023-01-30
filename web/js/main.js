@@ -90,10 +90,44 @@ $(function () {
             url: '/users/' + id,
             method: 'get',
             success: function (response) {
+                $("#pid").val(response.id);
                 $("#name").val(response.name);
                 $("#surname").val(response.surname);
             }
         });
+    });
+
+    // update user ajax request
+    $("#edit_user_form").submit(function (e) {
+        e.preventDefault();
+        const id = $("#pid").attr('value');
+        const formData = new FormData(this);
+        if (!this.checkValidity()) {
+            e.preventDefault();
+            $(this).addClass('was-validated');
+        } else {
+            $.ajax({
+                url: '/users/' + id,
+                method: 'post',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    $("#edit_user_modal").modal('hide');
+                    Swal.fire(
+                        'Updated',
+                        response.message,
+                        'success'
+                    );
+                    $('.modal-backdrop').remove();
+                    let el = document.getElementById('table_body');
+                    el.remove();
+                    fetchAllUsers();
+                }
+            });
+        }
     });
 
     // delete user ajax request
