@@ -33,7 +33,7 @@
 
                     <div class="mb-3">
                         <label for="image_add">Изображение пользователя</label>
-                        <input type="file" accept=".jpg, .jpeg, .png" name="image" id="image_add" class="form-control">
+                        <input type="file" accept=".jpg, .jpeg, .png" name="uploadedImage" id="image_add" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

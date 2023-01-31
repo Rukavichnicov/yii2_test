@@ -11,12 +11,16 @@ class User extends ActiveRecord
     const SCENARIO_UPDATE = 'update';
     private const PATH_USERS_IMAGES = 'uploads/images/users/';
     public $password_repeat;
-    private $uploadeFile;
+
+    /**
+     * @var ?UploadedFile
+     */
+    public ?UploadedFile $uploadedImage;
 
     public function __construct($config = [])
     {
         parent::__construct($config);
-        $this->uploadeFile = UploadedFile::getInstanceByName("image");
+        $this->uploadedImage = UploadedFile::getInstanceByName("uploadedImage");
     }
 
     public static function tableName()
@@ -32,8 +36,8 @@ class User extends ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[static::SCENARIO_CREATE] = ['id', 'name', 'surname', 'image', 'password', 'password_repeat'];
-        $scenarios[static::SCENARIO_UPDATE] = ['name', 'surname', 'image'];
+        $scenarios[static::SCENARIO_CREATE] = ['id', 'name', 'surname', 'uploadedImage', 'password', 'password_repeat'];
+        $scenarios[static::SCENARIO_UPDATE] = ['name', 'surname', 'uploadedImage'];
         return $scenarios;
     }
 
@@ -51,8 +55,7 @@ class User extends ActiveRecord
             ['password', 'string', 'max' => 100, 'message' => 'Пароль должен быть строкой не более 100 символов'],
             ['password_repeat', 'string', 'max' => 100, 'message' => 'Повтор пароля должен быть строкой не более 100 символов'],
 
-//            Почему то не работает при отправке файлов через ajax
-            ['image', 'file', 'mimeTypes' => 'image/*', 'maxSize' => 1024 * 1024 * 10, 'message' => 'Загружаемый файл должен быть картинкой, размером не более 10 МB'],
+            [['uploadedImage'], 'image', 'maxSize' => 1024 * 1024 * 10, 'message' => 'Загружаемый файл должен быть картинкой, размером не более 10 МB'],
 
             ['surname', 'default', 'value' => null],
             [['name', 'surname'], 'trim'],
@@ -62,29 +65,12 @@ class User extends ActiveRecord
 
     public function hasUploadedFile()
     {
-        return !empty($this->uploadeFile);
+        return !empty($this->uploadedImage);
     }
 
-    public function validateUploadedFile()
+    public function saveImageInStorage():string
     {
-        if ($this->hasUploadedFile()) {
-            $upload = $this->uploadeFile;
-            $rightType = ($upload->type == 'image/jpeg' || $upload->type == 'image/png' || $upload->type == 'gif');
-            $rightSize = $upload->size < 1024 * 1024 * 10;
-            if ($rightType && $rightSize) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return true;
-        }
-
-    }
-
-    public function upload()
-    {
-        $upload = $this->uploadeFile;
+        $upload = $this->uploadedImage;
         $fileName = $this->createNameUploadedFile($upload->extension);
         $upload->saveAs(self::PATH_USERS_IMAGES . $fileName);
         return $fileName;

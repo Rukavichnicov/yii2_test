@@ -49,13 +49,9 @@ class UserController extends Controller
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->validate()) {
             if ($model->hasUploadedFile()) {
-                if ($model->validateUploadedFile()) {
-                    $model->image = $model->upload();
-                } else {
-                    return ['error' => ['image' => 'Загружаемый файл должен быть картинкой, размером не более 10 МB']];
-                }
+                $model->image = $model->saveImageInStorage();
             }
-            $model->save();
+            $model->save(false);
             return ['message' => "Пользователь успешно создан"];
         } else {
             $errors = $model->errors;
@@ -70,16 +66,12 @@ class UserController extends Controller
         $model->load(Yii::$app->request->getBodyParams(), '');
         if ($model->validate()) {
             if ($model->hasUploadedFile()) {
-                if ($model->validateUploadedFile()) {
-                    if ($model->hasImage()) {
-                        $model->deleteImageFromStorage();
-                    }
-                    $model->image = $model->upload();
-                } else {
-                    return ['error' => ['image' => 'Загружаемый файл должен быть картинкой, размером не более 10 МB']];
+                if ($model->hasImage()) {
+                    $model->deleteImageFromStorage();
                 }
+                $model->image = $model->saveImageInStorage();
             }
-            $model->save();
+            $model->save(false);
             return ['message' => "Пользователь успешно обновлен"];
         } else {
             $errors = $model->errors;
@@ -95,12 +87,11 @@ class UserController extends Controller
     {
         $model = User::findOne($id);
 
-        if ($model->hasImage()) {
-            $model->deleteImageFromStorage();
-        }
-
         if (!$model->delete()) {
             return ['error' => "Ошибка удаления записи с id $id"];
+        }
+        if ($model->hasImage()) {
+            $model->deleteImageFromStorage();
         }
 
         return ['message' => "success"];
